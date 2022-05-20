@@ -10,6 +10,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import "./sign-in-form.styles.scss";
+import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 
 const defaultFormFields = {
   email: "",
@@ -34,7 +35,19 @@ const SignInForm = () => {
       const response = await signInAuthWithEmailAndPassword(email, password);
       console.log(response);
       resetFormFields();
-    } catch (error) {}
+    } catch (error) {
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("incorrect password");
+          break;
+        case "auth/user-not-found":
+          alert("wrong email");
+          break;
+        default:
+          console.log(error);
+          alert("authentication failed");
+      }
+    }
   };
 
   const handleChange = (event) => {
@@ -68,7 +81,7 @@ const SignInForm = () => {
         />
         <div className="buttons-container">
           <Button buttonType="submit">Sign In</Button>
-          <Button buttonType="google" onClick={signInWithGoogle}>
+          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
             Google sign in
           </Button>
         </div>
