@@ -1,20 +1,16 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
+  signOut,
   signInWithPopup,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  Firestore,
-} from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyBaGs7kmcMR2CLB29SQ6A87AZdOnKlmGjc",
   authDomain: "crwn-clothing-db-c8329.firebaseapp.com",
@@ -47,8 +43,6 @@ export const createUserDocumentFromAuth = async (
   if (!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid);
 
-  console.log(userDocRef);
-
   const userSnapshot = await getDoc(userDocRef);
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
@@ -76,3 +70,8 @@ export const signInAuthWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signOutUser = () => signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
