@@ -10,8 +10,12 @@ import {
 } from "../../store/categories/category.selector";
 import { CategoryContainer, Title } from "./category.styles";
 
+type CategoryRouteParmas = {
+  category: string
+}
+
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams<keyof CategoryRouteParmas>() as CategoryRouteParmas;
   const categoriesMap = useSelector(selectCategoriesMap);
   const isLoading = useSelector(selectIsCategoriesIsLoading);
   const [products, setProducts] = useState(categoriesMap[category]);
