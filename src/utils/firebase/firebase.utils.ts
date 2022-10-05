@@ -27,7 +27,7 @@ import {
 import { Category } from "../../store/categories/category.types";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBaGs7kmcMR2CLB29SQ6A87AZdOnKlmGjc",
+  apiKey: process.env.FIRESTORE_API_KEY,
   authDomain: "crwn-clothing-db-c8329.firebaseapp.com",
   projectId: "crwn-clothing-db-c8329",
   storageBucket: "crwn-clothing-db-c8329.appspot.com",
